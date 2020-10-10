@@ -36,3 +36,34 @@ updater <- Updater(TOKEN) + CommandHandler("start", start)
 updater$start_polling() # Send "/start" to the bot
 
 ```
+
+
+## Ahora con dos comandos
+
+```{r}
+TOKEN <- Sys.getenv("TOKEN")
+
+start <- function(bot, update) {
+  bot$sendMessage(
+    chat_id = update$message$chat$id,
+    text = sprintf("Hola %s! acabas de comuncarte con el Chatbot de ConectaR2021. Usted tiene el control sobre este chatbot, haciendo sus consultas con los siguientes comandos. ..... ", update$message$from$first_name)
+  )
+}
+
+
+hola <- function(bot, update) {
+  bot$sendMessage(
+    chat_id = update$message$chat$id,
+    text = sprintf("Hola este es el chatbot de la conferencia ConectaR2021. Puedes usar esto para obtener informacion sobre lo que estamos haciendo. Para ver las diferentes opciones usa el /en este momento tenemos /info /programa. ", 
+      update$message$from$first_name)
+  )
+}
+
+updater <- Updater(TOKEN) + CommandHandler("start", start)
+updater <- Updater(TOKEN) + CommandHandler("hola", hola)
+
+updater$start_polling() # Send "/start" to the bot
+
+```
+
+
