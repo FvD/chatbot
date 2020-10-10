@@ -1,0 +1,38 @@
+---
+title: "Como usar el chatbot de Telegram con R"
+author: "ixpantia"
+date: "10/10/2020"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(telegram.bot)
+```
+
+## Introduccion
+
+Quereomos usar Telegram
+
+## Un simple ejemplo
+
+```{r}
+TOKEN <- Sys.getenv("TOKEN")
+
+start <- function(bot, update) {
+  bot$sendMessage(
+    chat_id = update$message$chat$id,
+    text = sprintf("Hola %s! \n
+                   este es un mensaje de varias \n
+                   si varias \n
+                   lineas", update$message$from$first_name)
+  )
+}
+
+updater <- Updater(TOKEN) + CommandHandler("start", start)
+
+updater$start_polling() # Send "/start" to the bot
+
+```
